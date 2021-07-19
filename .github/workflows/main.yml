@@ -31,22 +31,22 @@ jobs:
         EOF
     - name: HDCTV
       run: |
-        gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-HDCTV/**' --drive-skip-depth 1 --max-age 12h --exclude "*FEED.1080i*, CCTV6.*"
     - name: AREY
       run: |
-        gclone copy ${{ secrets.FILE2_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE2_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --drive-skip-depth 1 --max-age 12h
     - name: OurTV
       run: |
-        gclone copy ${{ secrets.FILE3_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE3_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-OurTV/**' --drive-skip-depth 1 --max-age 12h
     - name: FLTTH
       run: |
-        gclone copy ${{ secrets.FILE4_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE4_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-FLTTH/**' --drive-skip-depth 1 --max-age 12h
     - name: HDSWEB
       run: |
-        gclone copy ${{ secrets.FILE5_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE5_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-HDSWEB/**' --drive-skip-depth 1 --max-age 12h
     - name: CHDHKTV
       run: |
-        gclone copy ${{ secrets.FILE6_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE6_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-CHDHKTV/**' --drive-skip-depth 1 --max-age 12h
     - name: CHDWEB
       run: |
-        gclone copy ${{ secrets.FILE7_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+        gclone copy ${{ secrets.FILE7_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-CHDWEB/**' --drive-skip-depth 1 --max-age 12h
