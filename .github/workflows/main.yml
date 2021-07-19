@@ -1,36 +1,52 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
+name: Transfers
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
+  watch:
+    types: started
+  schedule:
+    - cron: '30 */8 * * *'
   workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  AutoSyncProcess:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - uses: actions/checkout@v2.1.0
+    - name: Rclone Install
+      run: |
+        wget -q https://github.com/paninisa/papani/releases/download/gclone/gclone.gz
+        gunzip gclone.gz
+        sudo mv gclone /usr/bin/gclone
+        chmod +x /usr/bin/gclone
+        sudo apt install unrar -y -q
+    - name: Inject Rclone config
+      env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      run: |
+        wget -q https://github.com/$GITHUB_REPOSITORY/raw/main/accounts.rar
+        unrar -p'${{ secrets.RAR_PSWD }}' e accounts.rar ~/accounts/
+        index=`ls -l ~/accounts |grep "^-"|wc -l`
+        mkdir -p ~/.config/rclone/
+        cat >  ~/.config/rclone/rclone.conf  << EOF
+        ${RCLONE_CONF/1.json/$((RANDOM%$index+1)).json}
+        EOF
+    - name: HDCTV
+      run: |
+        gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: AREY
+      run: |
+        gclone copy ${{ secrets.FILE2_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: OurTV
+      run: |
+        gclone copy ${{ secrets.FILE3_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: FLTTH
+      run: |
+        gclone copy ${{ secrets.FILE4_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: HDSWEB
+      run: |
+        gclone copy ${{ secrets.FILE5_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: CHDHKTV
+      run: |
+        gclone copy ${{ secrets.FILE6_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
+    - name: CHDWEB
+      run: |
+        gclone copy ${{ secrets.FILE7_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000
