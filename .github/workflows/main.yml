@@ -31,8 +31,8 @@ jobs:
         EOF
     - name: Fliter file
       run: |
-        gclone lsd --max-depth 2 pt_part1:/ | sort -k 2 | awk '$2 = "2021-06-30"' | awk '{print $5}'  > /home/runner/include1.output
-        gclone lsd --max-depth 2 pt_part2:/ | sort -k 2 | awk '$2 = "2021-06-30"' | awk '{print $5}'  > /home/runner/include2.output
+        gclone lsd --max-depth 2 pt_part1:/ | sort -k 2 | awk '$2 == "2021-06-30"' | awk '{print $5}'  > /home/runner/include1.output
+        gclone lsd --max-depth 2 pt_part2:/ | sort -k 2 | awk '$2 == "2021-06-30"' | awk '{print $5}'  > /home/runner/include2.output
     - name: HDCTV
       run: |
         gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --include '**-HDCTV/**' --drive-skip-depth 1 --exclude "*FEED.1080i*, CCTV6.*" --include-from /home/runner/include1.output
