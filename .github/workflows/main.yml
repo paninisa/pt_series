@@ -32,6 +32,7 @@ jobs:
     - name: Fliter file
       run: |
         gclone lsd --max-depth 2 pt_part1:/ | sort -k 2 | awk '$2 == "2021-06-30"' | awk '{print $5}'  > /home/runner/include1.output
+        cat /home/runner/include1.output
         gclone lsd --max-depth 2 pt_part2:/ | sort -k 2 | awk '$2 == "2021-06-30"' | awk '{print $5}'  > /home/runner/include2.output
     - name: HDCTV
       run: |
