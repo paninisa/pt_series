@@ -2,8 +2,6 @@ name: Test
 on:
   watch:
     types: started
-  schedule:
-    - cron: '30 */8 * * *'
   workflow_dispatch:
 jobs:
   AutoSyncProcess:
