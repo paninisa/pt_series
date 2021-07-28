@@ -1,4 +1,4 @@
-name: Test
+name: HOFC
 on:
   watch:
     types: started
@@ -28,7 +28,16 @@ jobs:
         cat >  ~/.config/rclone/rclone.conf  << EOF
         ${RCLONE_CONF/1.json/$((RANDOM%$index+1)).json}
         EOF
-    - name: HDCTV
+    - name: OurTV
       run: |
-        rclone lsd pt_part1:/HDChina_sTepHEn/ | sort -k 2 | awk '$2 == "2021-07-02"' | awk '{print "- "$5"/*FEED.1080i*/**\n""+ "$5"/*-HDCTV/**"}' > hdc.output && echo "- **" >> hdc.output
-        gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M  --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from hdc.output
+        rclone lsd pt_part1:/OurBits_Panini/ | sort -k 2 | awk '$2 == "2021-07-02"' | awk '{print "+ "$5"/*-OurTV/**"}' > ourtv.output && echo "- **" >> ourtv.output
+        gclone copy ${{ secrets.FILE2_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M --max-backlog 1000 --drive-skip-depth 1 --checksum  --filter-from ourtv.output
+    - name: FLTTH
+      run: |
+        rclone lsd pt_part1:/OurBits_Panini/ | sort -k 2 | awk '$2 == "2021-07-02"' | awk '{print "+ "$5"/*-FLTTH/**"}' > fltth.output && echo "- **" >> fltth.output
+        gclone copy ${{ secrets.FILE3_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from fltth.output
+    - name: CHDHKTV
+      run: |
+        rclone lsd pt_part1:/CHDBits_Panini/ | sort -k 2 | awk '$2 == "2021-07-02"' | awk '{print "+ "$5"/*-CHDHKTV/**"}' > chdhktv.output && echo "- **" >> chdhktv.output
+        gclone copy ${{ secrets.FILE4_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=8 --drive-chunk-size 256M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from chdhktv.output
+
