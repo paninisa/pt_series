@@ -1,4 +1,4 @@
-name: Transfers
+name: Test
 on:
   watch:
     types: started
