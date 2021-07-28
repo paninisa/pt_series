@@ -14,7 +14,7 @@ jobs:
     - name: Rclone Install
       run: |
         curl https://rclone.org/install.sh | sudo bash
-        wget -q https://github.com/paninisa/papani/releases/download/gclone/gclone.gz
+        wget -q https://github.com/paninisa/papani/releases/download/v2/gclone.gz
         gunzip gclone.gz
         sudo mv gclone /usr/bin/gclone
         chmod +x /usr/bin/gclone
