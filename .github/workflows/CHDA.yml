@@ -30,7 +30,7 @@ jobs:
         EOF
     - name: CHDWEB
       run: |
-        rclone lsd pt_part1:/CHDBits_Panini/ | sort -k 2 | awk '"${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-CHDWEB/**"}' > chdweb.output && echo "- **" >> chdweb.output
+        rclone lsd pt_part1:/CHDBits_Panini/ | sort -k 2 | awk '$2 == "${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-CHDWEB/**"}' > chdweb.output && echo "- **" >> chdweb.output
         gclone copy ${{ secrets.FILE5_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=12 --drive-chunk-size 128M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from chdweb.output
     #- name: HDSWEB
     #  run: |
@@ -38,9 +38,9 @@ jobs:
     #    gclone copy ${{ secrets.FILE6_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=12 --drive-chunk-size 128M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from hdsweb.output
     - name: DoA
       run: |
-        rclone lsd pt_part2:/TTG_ME/ | sort -k 2 | awk '"${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-DoA/**"}' > doa.output && echo "- **" >> doa.output
+        rclone lsd pt_part2:/TTG_ME/ | sort -k 2 | awk '$2 == "${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-DoA/**"}' > doa.output && echo "- **" >> doa.output
         gclone copy ${{ secrets.FILE7_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=12 --drive-chunk-size 128M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from doa.output
     - name: AREY
       run: |
-        rclone lsd pt_part2:/HDChina_AREY/ | sort -k 2 | awk '"${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-AREY/**"}' > arey.output && echo "- **" >> arey.output
+        rclone lsd pt_part2:/HDChina_AREY/ | sort -k 2 | awk '$2 == "${{ secrets.DATE }}"' | awk '{print "+ "$5"/*-AREY/**"}' > arey.output && echo "- **" >> arey.output
         gclone copy ${{ secrets.FILE8_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=12 --drive-chunk-size 128M --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from arey.output
