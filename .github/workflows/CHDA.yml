@@ -22,7 +22,7 @@ jobs:
         RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
       run: |
         wget -q https://github.com/$GITHUB_REPOSITORY/raw/main/sa1.rar
-        unrar -p'${{ secrets.RAR_PSWD }}' e accounts.rar ~/accounts/
+        unrar -p'${{ secrets.RAR_PSWD }}' e sa1.rar ~/accounts/
         index=`ls -l ~/accounts |grep "^-"|wc -l`
         mkdir -p ~/.config/rclone/
         cat >  ~/.config/rclone/rclone.conf  << EOF
