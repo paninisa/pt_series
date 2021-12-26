@@ -32,7 +32,7 @@ jobs:
       run: |
         sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
         #rclone lsd pt_part1:/HDChina_sTepHEn/ | sort -k 2 | awk '$2 == "${{ secrets.DATE }}"' | awk '{print "- "$5"/*FEED.1080i*/**\n""+ "$5"/*HDCTV/**"}' > hdc.output && echo "- **" >> hdc.output
-        cat hdc.output
+        #cat hdc.output
         #gclone copy ${{ secrets.FILE1_PATH }}  --stats-log-level NOTICE -P --stats 30s --cache-chunk-total-size 25G --transfers=12 --drive-chunk-size 128M  --max-backlog 1000 --drive-skip-depth 1 --checksum --filter-from hdc.output
     - name: OurTV
       run: |
